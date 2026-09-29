@@ -1,5 +1,7 @@
 package com.weg.parkingLot.model;
 
+import com.weg.parkingLot.enums.VehicleType;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +34,7 @@ public class Vehicle {
     private String  color;
 
     @Column (name = "vehicle_type")
-    private String type;
+    private VehicleType vehicleType;
 
     @Column (name = "vehicle_customer")
     private Customer customer;
