@@ -2,6 +2,8 @@ package com.weg.parkingLot.model;
 
 import java.time.LocalDateTime;
 
+import com.weg.parkingLot.enums.PaymentStatus;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +33,7 @@ public class Payment {
 
     private LocalDateTime paidAt;
 
-    private String status;
+    private PaymentStatus paymentStatus;
     
 
 }
