@@ -1,47 +1,42 @@
 package com.weg.parkingLot.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.weg.parkingLot.enums.ParkingSessionStatus;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Entity 
-@Getter 
-@Setter 
-@AllArgsConstructor 
-@NoArgsConstructor 
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkingSession {
 
-    @Id 
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "parking_session_amount_vehicle")
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @Column (name = "parking_session_parking_spot")
+    @ManyToOne
+    @JoinColumn(name = "parking_spot_id", nullable = false)
     private ParkingSpot parkingSpot;
 
-    @Column (name = "parking_session_entry_time")
+    @Column(name = "parking_session_entry_time", nullable = false)
     private LocalDateTime entryTime;
 
-    @Column (name = "parking_session_exit_time")
+    @Column(name = "parking_session_exit_time")
     private LocalDateTime exitTime;
 
-    @Column (name = "parking_session_status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "parking_session_status", nullable = false)
     private ParkingSessionStatus parkingSessionStatus;
 
-    @Column (name = "parking_session_amount")
-    private Double amount;
-
+    @Column(name = "parking_session_amount")
+    private BigDecimal amount;
 }
