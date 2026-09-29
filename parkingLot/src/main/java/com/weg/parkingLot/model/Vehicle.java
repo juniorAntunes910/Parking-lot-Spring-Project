@@ -1,11 +1,16 @@
 package com.weg.parkingLot.model;
 
+import com.weg.parkingLot.enums.VehicleType;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +37,18 @@ public class Vehicle {
     private String  color;
 
     @Column (name = "vehicle_type")
-    private String type;
+    private VehicleType vehicleType;
 
     @Column (name = "vehicle_customer")
+    @ManyToOne 
+    @JoinColumn (name = "customer_id")
     private Customer customer;
+
+    @Column (name = "vehicle_parking_spot")
+    @OneToOne (mappedBy = "vehicle")
+    ParkingSpot parkingSpot;
+
+
     
 
 }

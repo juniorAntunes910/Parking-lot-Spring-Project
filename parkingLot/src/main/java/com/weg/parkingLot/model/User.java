@@ -2,6 +2,8 @@ package com.weg.parkingLot.model;
 
 import java.time.LocalDateTime;
 
+import com.weg.parkingLot.enums.Role;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,11 +36,11 @@ public class User {
     private String password;
 
     @Column(name = "user_role")
-    private String role;
+    private Role role;
 
     @Column(name = "user_enabled")
     private Boolean enabled;
 
     @Column (name = "user_created_at")
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

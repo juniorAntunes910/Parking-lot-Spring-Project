@@ -1,37 +1,33 @@
 package com.weg.parkingLot.model;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.weg.parkingLot.enums.ParkingSpotStatus;
+import com.weg.parkingLot.enums.ParkingSpotType;
 
-@Entity 
-@Getter 
-@Setter 
-@AllArgsConstructor 
-@NoArgsConstructor 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkingSpot {
 
-    @Id 
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "parking_spot_code")
+    @Column(name = "parking_spot_code", unique = true, nullable = false)
     private String code;
 
-    @Column (name = "parking_spot_type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "parking_spot_type", nullable = false)
+    private ParkingSpotType parkingSpotType;
 
-    @Column (name = "parking_spot_status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "parking_spot_status", nullable = false)
+    private ParkingSpotStatus parkingSpotStatus;
 
-    @Column (name = "parking_spot_enabled")
+    @Column(name = "parking_spot_enabled", nullable = false)
     private Boolean enabled;
-
 }
