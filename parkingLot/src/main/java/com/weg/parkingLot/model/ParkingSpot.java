@@ -1,5 +1,8 @@
 package com.weg.parkingLot.model;
 
+import com.weg.parkingLot.enums.ParkingSpotStatus;
+import com.weg.parkingLot.enums.ParkingSpotType;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,10 +29,10 @@ public class ParkingSpot {
     private String code;
 
     @Column (name = "parking_spot_type")
-    private String type;
+    private ParkingSpotType parkingSpotType;
 
     @Column (name = "parking_spot_status")
-    private String status;
+    private ParkingSpotStatus parkingSpotStatus;
 
     @Column (name = "parking_spot_enabled")
     private Boolean enabled;
