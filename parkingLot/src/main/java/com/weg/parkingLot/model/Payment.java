@@ -1,5 +1,7 @@
 package com.weg.parkingLot.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,5 +26,12 @@ public class Payment {
     private ParkingSession parkingSession;
 
     private Double amount;
+
+    private String paymentMethod;
+
+    private LocalDateTime paidAt;
+
+    private String status;
+    
 
 }
