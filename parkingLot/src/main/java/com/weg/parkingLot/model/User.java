@@ -2,7 +2,7 @@ package com.weg.parkingLot.model;
 
 import java.time.LocalDateTime;
 
-import javax.management.relation.Role;
+import com.weg.parkingLot.enums.Role;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
@@ -42,5 +42,5 @@ public class User {
     private Boolean enabled;
 
     @Column (name = "user_created_at")
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

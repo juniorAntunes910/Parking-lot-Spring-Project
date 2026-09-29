@@ -36,7 +36,6 @@ public class Customer {
     @Column(name = "customer_phone")
     private String phone;
 
-    @Column (name = "customer_vehicles")
     @OneToMany (mappedBy = "customer")
     private List<Vehicle> vehicles = new ArrayList<>();
 
