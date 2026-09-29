@@ -1,4 +1,4 @@
-package com.weg.parkingLot.dto.customerDto;
+package com.weg.parkingLot.dto.UserDto;
 
 import java.time.LocalDateTime;
 

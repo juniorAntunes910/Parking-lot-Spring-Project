@@ -1,4 +1,4 @@
-package com.weg.parkingLot.dto.customerDto;
+package com.weg.parkingLot.dto.UserDto;
 
 public record UserRequest(
     String name,
