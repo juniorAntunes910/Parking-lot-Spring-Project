@@ -1,5 +1,7 @@
 package com.weg.parkingLot.model;
 
+import com.weg.parkingLot.enums.VehicleType;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +25,7 @@ public class PriceTable {
     private Long id;
 
     @Column(name = "price_table_vehicle_type")
-    private String vehicleType;
+    private VehicleType vehicleType;
 
     @Column(name = "price_table_first_hour_price")
     private Double firstHourPrice;
