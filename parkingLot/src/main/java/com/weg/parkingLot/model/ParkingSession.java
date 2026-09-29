@@ -2,6 +2,8 @@ package com.weg.parkingLot.model;
 
 import java.time.LocalDateTime;
 
+import com.weg.parkingLot.enums.ParkingSessionStatus;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +39,7 @@ public class ParkingSession {
     private LocalDateTime exitTime;
 
     @Column (name = "parking_session_status")
-    private String status;
+    private ParkingSessionStatus parkingSessionStatus;
 
     @Column (name = "parking_session_amount")
     private Double amount;
