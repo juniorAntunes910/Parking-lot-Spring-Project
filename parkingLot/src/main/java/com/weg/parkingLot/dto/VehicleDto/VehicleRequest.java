@@ -5,6 +5,7 @@ public record VehicleRequest(
     String model,
     String color,
     String vehicleType,
-    Long customer
+    Long customer,
+    Long parkingSpot
 ) {
 }
