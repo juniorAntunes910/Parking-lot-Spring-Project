@@ -23,7 +23,7 @@ public class UserService {
 
     @Transactional
     public UserResponse create(UserRequest userRequest) {
-        if (userRepository.existByEmail(userRequest.email())) {
+        if (userRepository.existsByEmail(userRequest.email())) {
             throw new RuntimeException("Email já cadastrado");
         }
         User user = userMapper.toEntity(userRequest);

@@ -23,7 +23,7 @@ public class CustomerService {
     @Transactional
     public CustomerResponse create(CustomerRequest customerRequest) {
 
-        if (customerRepository.existByDocument(customerRequest.document())) {
+        if (customerRepository.existsByDocument(customerRequest.document())) {
             throw new RuntimeException("Cliente já cadastrado");
         }
 
