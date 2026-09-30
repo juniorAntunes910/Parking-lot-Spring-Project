@@ -11,6 +11,7 @@ import com.weg.parkingLot.model.ParkingSpot;
 public interface ParkingSpotMapper {
 
     @Mapping (target = "id", ignore = true)
+    @Mapping (target = "vehicle", ignore = true)
     ParkingSpot toEntity(ParkingSpotRequest parkingSpotRequest);
 
     ParkingSpotResponse toResponse(ParkingSpot parkingSpot);

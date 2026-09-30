@@ -30,4 +30,8 @@ public class ParkingSpot {
 
     @Column(name = "parking_spot_enabled", nullable = false)
     private Boolean enabled;
+
+    @OneToOne
+    @JoinColumn(name = "vehicle_id", unique = true)
+    private Vehicle vehicle;
 }

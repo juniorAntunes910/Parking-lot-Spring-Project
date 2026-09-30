@@ -39,14 +39,12 @@ public class Vehicle {
     @Column (name = "vehicle_type")
     private VehicleType vehicleType;
 
-    @Column (name = "vehicle_customer")
     @ManyToOne 
     @JoinColumn (name = "customer_id")
     private Customer customer;
 
-    @Column (name = "vehicle_parking_spot")
     @OneToOne (mappedBy = "vehicle")
-    ParkingSpot parkingSpot;
+    private ParkingSpot parkingSpot;
 
 
     

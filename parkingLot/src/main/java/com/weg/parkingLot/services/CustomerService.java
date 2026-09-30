@@ -1,7 +1,6 @@
 package com.weg.parkingLot.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +16,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-    private CustomerRepository customerRepository;
-    private CustomerMapper customerMapper;
+    private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
 
     @Transactional
     public CustomerResponse create(CustomerRequest customerRequest) {
 
         if (customerRepository.existsByDocument(customerRequest.document())) {
-            throw new RuntimeException("Customer not found");
+            throw new RuntimeException("Customer already registered");
         }
 
         Customer customer = customerMapper.toEntity(customerRequest);
@@ -47,7 +46,7 @@ public class CustomerService {
         return customerMapper.toResponse(customer);
     }
 
-    @Transactional (readOnly = true)
+    @Transactional
     public CustomerResponse update(CustomerRequest customerRequest, Long id) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
