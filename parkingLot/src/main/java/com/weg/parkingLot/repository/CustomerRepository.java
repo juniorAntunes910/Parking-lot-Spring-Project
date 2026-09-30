@@ -8,4 +8,5 @@ import com.weg.parkingLot.model.Customer;
 @Repository 
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
+    boolean existsByDocument(String document);
 }

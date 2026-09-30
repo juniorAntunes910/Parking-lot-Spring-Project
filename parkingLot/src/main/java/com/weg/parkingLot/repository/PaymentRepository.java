@@ -1,5 +1,9 @@
 package com.weg.parkingLot.repository;
 
-public interface PaymentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.weg.parkingLot.model.Payment;
+
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
 }

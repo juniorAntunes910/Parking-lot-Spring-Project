@@ -2,6 +2,7 @@ package com.weg.parkingLot.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.weg.parkingLot.dto.ParkingSession.ParkingSessionRequest;
 import com.weg.parkingLot.dto.ParkingSession.ParkingSessionResponse;
@@ -14,4 +15,6 @@ public interface ParkingSessionMapper {
     ParkingSession toEntity(ParkingSessionRequest parkingSessionRequest);
 
     ParkingSessionResponse toResponse(ParkingSession parkingSession);
+
+    void updateParkingSession(ParkingSessionRequest parkingSessionRequest, @MappingTarget ParkingSession parkingSession);
 }
