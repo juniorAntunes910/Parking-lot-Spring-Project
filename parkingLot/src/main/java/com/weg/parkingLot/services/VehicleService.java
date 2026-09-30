@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.weg.parkingLot.dto.VehicleDto.VehicleRequest;
 import com.weg.parkingLot.dto.VehicleDto.VehicleResponse;
 import com.weg.parkingLot.mapper.VehicleMapper;
+import com.weg.parkingLot.model.Customer;
 import com.weg.parkingLot.model.Vehicle;
+import com.weg.parkingLot.repository.CustomerRepository;
 import com.weg.parkingLot.repository.VehicleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,12 +21,14 @@ public class VehicleService {
 
     private VehicleRepository vehicleRepository;
     private VehicleMapper vehicleMapper;
+    private CustomerRepository customerRepository;
 
     @Transactional
     public VehicleResponse create(VehicleRequest vehicleRequest) {
         if (vehicleRepository.existsByPlate(vehicleRequest.plate())) {
             throw new RuntimeException("Veiculo já cadastrado");
         }
+        Customer customer = customerRepository.findById(vehicleRequest.customer()).orElseThrow(() -> new RuntimeException("C"));
         Vehicle vehicle = vehicleMapper.toEntity(vehicleRequest);
         vehicleRepository.save(vehicle);
         return vehicleMapper.toResponse(vehicle);

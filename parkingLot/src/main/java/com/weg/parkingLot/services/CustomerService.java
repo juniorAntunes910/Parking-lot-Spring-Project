@@ -24,7 +24,7 @@ public class CustomerService {
     public CustomerResponse create(CustomerRequest customerRequest) {
 
         if (customerRepository.existsByDocument(customerRequest.document())) {
-            throw new RuntimeException("Cliente já cadastrado");
+            throw new RuntimeException("Customer not found");
         }
 
         Customer customer = customerMapper.toEntity(customerRequest);
@@ -43,21 +43,21 @@ public class CustomerService {
     public CustomerResponse readById(Long id) {
 
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
         return customerMapper.toResponse(customer);
     }
 
     @Transactional (readOnly = true)
     public CustomerResponse update(CustomerRequest customerRequest, Long id) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
         customerMapper.updateEntity(customerRequest, customer);
         return customerMapper.toResponse(customer);
     }
 
     @Transactional 
     public void delete(Long id){
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
         customerRepository.delete(customer);
     }
 

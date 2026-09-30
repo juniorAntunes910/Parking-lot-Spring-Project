@@ -26,9 +26,9 @@ public class ParkingSessionService {
     @Transactional
     public ParkingSessionResponse create(ParkingSessionRequest parkingSessionRequest) {
         Vehicle vehicle = vehicleRepository.findById(parkingSessionRequest.vehicle())
-                .orElseThrow(() -> new RuntimeException("Veiculo não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
         if (parkingSessionRepository.existsByVehicle(vehicle)) {
-            throw new RuntimeException("Veiculo já cadastrado");
+            throw new RuntimeException("Vehicle already exist in the parking session!");
         }
         ParkingSession parkingSession = parkingSessionMapper.toEntity(parkingSessionRequest);
         parkingSessionRepository.save(parkingSession);
@@ -44,14 +44,14 @@ public class ParkingSessionService {
     @Transactional(readOnly = true)
     public ParkingSessionResponse readById(Long id) {
         ParkingSession parkingSession = parkingSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parking Session Não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Parking Session not found"));
         return parkingSessionMapper.toResponse(parkingSession);
     }
 
     @Transactional
     public ParkingSessionResponse update(ParkingSessionRequest parkingSessionRequest, Long id) {
         ParkingSession parkingSession = parkingSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parking Session não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Parking Session not found"));
         parkingSessionMapper.updateParkingSession(parkingSessionRequest, parkingSession);
         parkingSessionMapper.updateParkingSession(parkingSessionRequest, parkingSession);
         parkingSessionRepository.save(parkingSession);
@@ -61,7 +61,7 @@ public class ParkingSessionService {
     @Transactional
     public void delete(Long id) {
         ParkingSession parkingSession = parkingSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parking Session não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Parking Session not found"));
         parkingSessionRepository.delete(parkingSession);
     }
 
