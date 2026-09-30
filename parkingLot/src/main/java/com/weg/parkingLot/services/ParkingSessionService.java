@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.weg.parkingLot.dto.ParkingSession.ParkingSessionRequest;
 import com.weg.parkingLot.dto.ParkingSession.ParkingSessionResponse;
 import com.weg.parkingLot.mapper.ParkingSessionMapper;
 import com.weg.parkingLot.model.ParkingSession;
+import com.weg.parkingLot.model.ParkingSpot;
 import com.weg.parkingLot.model.Vehicle;
 import com.weg.parkingLot.repository.ParkingSessionRepository;
+import com.weg.parkingLot.repository.ParkingSpotRepository;
 import com.weg.parkingLot.repository.VehicleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,18 +20,23 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ParkingSessionService {
-    private ParkingSessionRepository parkingSessionRepository;
-    private ParkingSessionMapper parkingSessionMapper;
-    private VehicleRepository vehicleRepository;
+    private final ParkingSessionRepository parkingSessionRepository;
+    private final ParkingSessionMapper parkingSessionMapper;
+    private final VehicleRepository vehicleRepository;
+    private final ParkingSpotRepository parkingSpotRepository;
 
     @Transactional
     public ParkingSessionResponse create(ParkingSessionRequest parkingSessionRequest) {
         Vehicle vehicle = vehicleRepository.findById(parkingSessionRequest.vehicle())
                 .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        ParkingSpot parkingSpot = parkingSpotRepository.findById(parkingSessionRequest.parkingSpot())
+                .orElseThrow(() -> new RuntimeException("Parking spot not found"));
         if (parkingSessionRepository.existsByVehicle(vehicle)) {
             throw new RuntimeException("Vehicle already exist in the parking session!");
         }
         ParkingSession parkingSession = parkingSessionMapper.toEntity(parkingSessionRequest);
+        parkingSession.setVehicle(vehicle);
+        parkingSession.setParkingSpot(parkingSpot);
         parkingSessionRepository.save(parkingSession);
         return parkingSessionMapper.toResponse(parkingSession);
     }
@@ -53,7 +59,12 @@ public class ParkingSessionService {
         ParkingSession parkingSession = parkingSessionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Parking Session not found"));
         parkingSessionMapper.updateParkingSession(parkingSessionRequest, parkingSession);
-        parkingSessionMapper.updateParkingSession(parkingSessionRequest, parkingSession);
+        Vehicle vehicle = vehicleRepository.findById(parkingSessionRequest.vehicle())
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        ParkingSpot parkingSpot = parkingSpotRepository.findById(parkingSessionRequest.parkingSpot())
+                .orElseThrow(() -> new RuntimeException("Parking spot not found"));
+        parkingSession.setVehicle(vehicle);
+        parkingSession.setParkingSpot(parkingSpot);
         parkingSessionRepository.save(parkingSession);
         return parkingSessionMapper.toResponse(parkingSession);
     }

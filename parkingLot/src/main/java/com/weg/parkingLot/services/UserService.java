@@ -2,7 +2,6 @@ package com.weg.parkingLot.services;
 
 import java.util.List;
 
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class UserService {
 
-    private UserMapper userMapper;
-    private UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Transactional
     public UserResponse create(UserRequest userRequest) {
@@ -27,6 +26,7 @@ public class UserService {
             throw new RuntimeException("Email já cadastrado");
         }
         User user = userMapper.toEntity(userRequest);
+        user.setEnabled(true);
         userRepository.save(user);
         return userMapper.userResponse(user);
     }
@@ -46,7 +46,7 @@ public class UserService {
 
     @Transactional 
     public UserResponse update(UserRequest userRequest, Long id){
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         userMapper.updateUser(userRequest, user);
         userRepository.save(user);
         return userMapper.userResponse(user);
