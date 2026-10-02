@@ -10,7 +10,7 @@ import com.weg.parkingLot.dto.CustomerDto.CustomerRequest;
 import com.weg.parkingLot.dto.CustomerDto.CustomerResponse;
 import com.weg.parkingLot.model.Customer;
 
-@Mapper (componentModel = "spring")
+@Mapper (componentModel = "spring", uses = VehicleMapper.class)
 public interface CustomerMapper {
 
     @Mapping (target = "id", ignore = true)

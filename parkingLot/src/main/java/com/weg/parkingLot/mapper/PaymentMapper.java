@@ -11,8 +11,10 @@ import com.weg.parkingLot.model.Payment;
 public interface PaymentMapper {
 
     @Mapping (target = "id", ignore = true)
+    @Mapping (target = "parkingSession.id", source = "parkingSession")
     Payment toEntity(PaymentRequest paymentRequest);
 
+    @Mapping (target = "parkingSession", source = "parkingSession.id")
     PaymentResponse toResponse(Payment payment);
 
 }
