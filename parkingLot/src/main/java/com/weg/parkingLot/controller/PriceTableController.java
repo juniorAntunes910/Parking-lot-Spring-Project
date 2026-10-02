@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weg.parkingLot.dto.PaymentDto.PaymentRequest;
-import com.weg.parkingLot.dto.PaymentDto.PaymentResponse;
 import com.weg.parkingLot.dto.PriceTableDto.PriceTableRequest;
 import com.weg.parkingLot.dto.PriceTableDto.PriceTableResponse;
 import com.weg.parkingLot.services.PriceTableService;

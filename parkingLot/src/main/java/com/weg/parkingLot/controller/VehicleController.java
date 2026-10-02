@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weg.parkingLot.dto.UserDto.UserRequest;
-import com.weg.parkingLot.dto.UserDto.UserResponse;
 import com.weg.parkingLot.dto.VehicleDto.VehicleRequest;
 import com.weg.parkingLot.dto.VehicleDto.VehicleResponse;
-import com.weg.parkingLot.services.UserService;
 import com.weg.parkingLot.services.VehicleService;
 
 import jakarta.websocket.server.PathParam;
