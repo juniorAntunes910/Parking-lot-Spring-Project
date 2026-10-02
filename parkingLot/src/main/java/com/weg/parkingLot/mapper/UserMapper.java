@@ -23,6 +23,7 @@ public interface UserMapper {
     @BeanMapping (nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping (target = "id", ignore = true)
     @Mapping (target = "createdAt", ignore = true)
+    @Mapping (target = "enabled", ignore = true)
     void updateUser(UserRequest userRequest, @MappingTarget User user);
 
 }
