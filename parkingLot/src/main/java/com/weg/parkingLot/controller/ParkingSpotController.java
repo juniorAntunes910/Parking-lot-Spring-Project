@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@RequestMapping("/parkingSpot")
+@RequestMapping("/parkingSpots")
 @RestController
 @RequiredArgsConstructor
 public class ParkingSpotController {
