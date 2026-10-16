@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.weg.parkingLot.Exceptions.ResourceNotFoundException;
 import com.weg.parkingLot.dto.PaymentDto.PaymentRequest;
 import com.weg.parkingLot.dto.PaymentDto.PaymentResponse;
 import com.weg.parkingLot.mapper.PaymentMapper;
@@ -26,7 +27,7 @@ public class PaymentService {
     @Transactional
     public PaymentResponse create(PaymentRequest request) {
         ParkingSession parkingSession = parkingSessionRepository.findById(request.parkingSession())
-                .orElseThrow(() -> new RuntimeException("Parking session not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parking session not found"));
         Payment payment = paymentMapper.toEntity(request);
         payment.setParkingSession(parkingSession);
         paymentRepository.save(payment);
@@ -43,16 +44,16 @@ public class PaymentService {
     @Transactional(readOnly = true)
     public PaymentResponse readById(Long id) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         return paymentMapper.toResponse(payment);
     }
 
     @Transactional
     public PaymentResponse update(PaymentRequest request, Long id) {
         Payment current = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         ParkingSession parkingSession = parkingSessionRepository.findById(request.parkingSession())
-                .orElseThrow(() -> new RuntimeException("Parking session not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parking session not found"));
         Payment updated = paymentMapper.toEntity(request);
         updated.setId(current.getId());
         updated.setParkingSession(parkingSession);
@@ -63,7 +64,7 @@ public class PaymentService {
     @Transactional
     public void delete(Long id) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         paymentRepository.delete(payment);
     }
 }

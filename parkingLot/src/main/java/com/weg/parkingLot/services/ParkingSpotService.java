@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.weg.parkingLot.Exceptions.AlreadyRegisteredException;
+import com.weg.parkingLot.Exceptions.ResourceNotFoundException;
 import com.weg.parkingLot.dto.ParkingSpotDto.ParkingSpotRequest;
 import com.weg.parkingLot.dto.ParkingSpotDto.ParkingSpotResponse;
 import com.weg.parkingLot.mapper.ParkingSpotMapper;
@@ -23,7 +25,7 @@ public class ParkingSpotService {
     @Transactional
     public ParkingSpotResponse create(ParkingSpotRequest request) {
         if (parkingSpotRepository.existsByCode(request.code())) {
-            throw new RuntimeException("Parking spot code already registered");
+            throw new AlreadyRegisteredException("Parking spot code already registered");
         }
         ParkingSpot parkingSpot = parkingSpotMapper.toEntity(request);
         parkingSpotRepository.save(parkingSpot);
@@ -40,16 +42,16 @@ public class ParkingSpotService {
     @Transactional(readOnly = true)
     public ParkingSpotResponse readById(Long id) {
         ParkingSpot parkingSpot = parkingSpotRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parking spot not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parking spot not found"));
         return parkingSpotMapper.toResponse(parkingSpot);
     }
 
     @Transactional
     public ParkingSpotResponse update(ParkingSpotRequest request, Long id) {
         ParkingSpot current = parkingSpotRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parking spot not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parking spot not found"));
         if (parkingSpotRepository.existsByCode(request.code()) && !current.getCode().equals(request.code())) {
-            throw new RuntimeException("Parking spot code already registered");
+            throw new AlreadyRegisteredException("Parking spot code already registered");
         }
         ParkingSpot updated = parkingSpotMapper.toEntity(request);
         updated.setId(current.getId());
@@ -60,7 +62,7 @@ public class ParkingSpotService {
     @Transactional
     public void delete(Long id) {
         ParkingSpot parkingSpot = parkingSpotRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parking spot not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parking spot not found"));
         parkingSpotRepository.delete(parkingSpot);
     }
 }
