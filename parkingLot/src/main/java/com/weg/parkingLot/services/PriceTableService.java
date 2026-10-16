@@ -2,9 +2,11 @@ package com.weg.parkingLot.services;
 
 import java.util.List;
 
+import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.weg.parkingLot.Exceptions.ResourceNotFoundException;
 import com.weg.parkingLot.dto.PriceTableDto.PriceTableRequest;
 import com.weg.parkingLot.dto.PriceTableDto.PriceTableResponse;
 import com.weg.parkingLot.mapper.PriceTableMapper;
@@ -36,14 +38,14 @@ public class PriceTableService {
     @Transactional(readOnly = true)
     public PriceTableResponse readById(Long id) {
         PriceTable priceTable = priceTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Price table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Price table not found"));
         return priceTableMapper.toResponse(priceTable);
     }
 
     @Transactional
     public PriceTableResponse update(PriceTableRequest request, Long id) {
         PriceTable current = priceTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Price table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Price table not found"));
         PriceTable updated = priceTableMapper.toEntity(request);
         updated.setId(current.getId());
         priceTableRepository.save(updated);
@@ -53,7 +55,7 @@ public class PriceTableService {
     @Transactional
     public void delete(Long id) {
         PriceTable priceTable = priceTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Price table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Price table not found"));
         priceTableRepository.delete(priceTable);
     }
 }
