@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.weg.parkingLot.Exceptions.AlreadyRegisteredException;
+import com.weg.parkingLot.Exceptions.ResourceNotFoundException;
 import com.weg.parkingLot.dto.CustomerDto.CustomerRequest;
 import com.weg.parkingLot.dto.CustomerDto.CustomerResponse;
 import com.weg.parkingLot.mapper.CustomerMapper;
@@ -23,7 +25,7 @@ public class CustomerService {
     public CustomerResponse create(CustomerRequest customerRequest) {
 
         if (customerRepository.existsByDocument(customerRequest.document())) {
-            throw new RuntimeException("Customer already registered");
+            throw new AlreadyRegisteredException("Customer already exists in the database");
         }
 
         Customer customer = customerMapper.toEntity(customerRequest);
@@ -42,21 +44,21 @@ public class CustomerService {
     public CustomerResponse readById(Long id) {
 
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         return customerMapper.toResponse(customer);
     }
 
     @Transactional
     public CustomerResponse update(CustomerRequest customerRequest, Long id) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         customerMapper.updateEntity(customerRequest, customer);
         return customerMapper.toResponse(customer);
     }
 
     @Transactional 
     public void delete(Long id){
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         customerRepository.delete(customer);
     }
 
